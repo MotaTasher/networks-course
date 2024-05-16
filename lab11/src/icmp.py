@@ -19,7 +19,7 @@ def calculate_checksum(data):
 
 def create_packet(id):
     header = struct.pack('>BBHHH', ICMP_ECHO_REQUEST, ICMP_CODE, 0, id, 1)
-    data = 192 * b'Q'  # 192 bytes of data
+    data = 192 * b'Q'
     my_checksum = calculate_checksum(header + data)
     header = struct.pack('>BBHHH', ICMP_ECHO_REQUEST, ICMP_CODE, my_checksum, id, 1)
     return header + data
