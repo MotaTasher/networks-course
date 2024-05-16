@@ -44,7 +44,8 @@ class UDPClient:
             send_time = time.time()
             data = f"{send_time}|{packet_count}|{(b'Q' * 192).decode('utf-8')}"
             client_socket.sendto(data.encode('utf-8'), (ip, port))
-            time.sleep(0.1)
+
+            time.sleep(0.001)
         client_socket.close()
 
 if __name__ == "__main__":

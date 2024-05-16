@@ -94,7 +94,7 @@ def print_routing_tables(routers):
         print()
 
 if __name__ == "__main__":
-    routers = generate_random_network(num_routers=5)
+    routers = generate_random_network(num_routers=3)
     
     # routers = load_network_from_file('network_output.json')
     save_network_to_file(routers, 'network_output.json')

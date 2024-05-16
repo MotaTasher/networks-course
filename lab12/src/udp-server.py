@@ -50,23 +50,29 @@ class UDPServer:
         packet_count = 0
         start_time = None
         packet_count = None
+        
         while True:
-            data, addr = server_socket.recvfrom(2048)
-            if not data:
+            try:
+                data, addr = server_socket.recvfrom(2048)
+                server_socket.settimeout(1)
+                if not data:
+                    break
+                data = data.decode('utf-8')
+                if start_time is None:
+                    start_time = float(data.split('|')[0])
+                if packet_count is None:
+                    packet_count = int(data.split('|')[1])
+
+                received_data += data.split('|')[2]
+            except:
                 break
-            data = data.decode('utf-8')
-            if start_time is None:
-                start_time = float(data.split('|')[0])
-            if packet_count is None:
-                start_time = int(data.split('|')[1])
 
-            received_data += data.split('|')[2]
-
-        end_time = time.time()
+        end_time = time.time() - 1
         duration = end_time - start_time
         speed = len(received_data) / duration
         self.speed_var.set(f"{speed:.2f} B/S")
         self.packets_var.set(f"{packet_count} / {packet_count}")
+        print(speed, packet_count, packet_count)
 
         server_socket.close()
 
